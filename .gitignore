@@ -1,0 +1,52 @@
+.env
+/proximity_service/
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-specific temporary files
+tmp
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# GoLand directories
+.idea/
+
+# Go build - Exclude the binary output directory
+/bin/
+
+# Dependency directories (remove these lines if using Go modules)
+/vendor/
+Gopkg.lock
+Gopkg.toml
+
+# Log files
+*.log
+
+# External tool binaries
+/bin/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Exclude the go modules directories
+/go.mod
+/go.sum
+/vendor/
