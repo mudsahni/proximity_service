@@ -22,7 +22,7 @@ func (businessType BusinessType) String() string {
 		"Other",      // index 2, BusinessType = 2
 		"Religious",  // index 3, BusinessType = 3
 		"Hospital",   // index 4, BusinessType = 4
-	}[businessType] // Use businessType directly as index
+	}[businessType] // Use businessType directly as an index
 }
 
 func ParseBusinessType(businessType string) (BusinessType, error) {

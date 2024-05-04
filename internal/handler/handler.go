@@ -32,7 +32,6 @@ func getBusinessHandler(c *gin.Context) {
 		})
 		return
 	}
-
 	c.JSON(http.StatusOK, business)
 }
 

@@ -56,5 +56,4 @@ func FindNearbyBusinesses(lat, lng, radius float64, resolution int) (*[]*model.B
 	}
 
 	return &businessResponses, nil
-
 }
