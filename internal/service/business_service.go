@@ -82,6 +82,5 @@ func GetAllBusinesses() (*[]*model.BusinessResponse, error) {
 	if err := cursor.Err(); err != nil {
 		return nil, fmt.Errorf("failed to iterate businesses: %s", err)
 	}
-
 	return &businessResponses, nil
 }

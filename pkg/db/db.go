@@ -56,7 +56,6 @@ func Disconnect() error {
 		slog.Error("failed to disconnect from MongoDB.", "Error", err)
 		return fmt.Errorf("failed to disconnect from MongoDB: %s", err)
 	}
-
 	slog.Info("Disconnected from MongoDB!")
 	return nil
 }

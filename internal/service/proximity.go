@@ -10,7 +10,11 @@ import (
 	"proximity_service_go/pkg/db"
 )
 
-func FindNearbyBusinesses(lat, lng, radius float64, resolution int) (*[]*model.BusinessResponse, error) {
+func FindNearbyBusinesses(
+	lat, lng, radius float64,
+	resolution int,
+	businessType *constant.BusinessType,
+) (*[]*model.BusinessResponse, error) {
 	edgeLength := h3.HexagonEdgeLengthAvgKm(resolution) * 1000
 	numRings := int(math.Ceil((radius * 1000) / edgeLength))
 
@@ -28,12 +32,13 @@ func FindNearbyBusinesses(lat, lng, radius float64, resolution int) (*[]*model.B
 	collection := client.Database(constant.ProximityServiceDatabase).Collection(constant.BusinessCollection)
 
 	// Prepare the MongoDB query to find businesses with matching H3 indexes
-	var query bson.M
-	if resolution == constant.Resolution9 {
+	resolutionType := constant.H3ResolutionStrings[resolution]
 
-		query = bson.M{"h3indexresolution9": bson.M{"$in": nearbyIndexes}}
-	} else {
-		query = bson.M{"h3indexresolution12": bson.M{"$in": nearbyIndexes}}
+	var query bson.M
+	query = bson.M{resolutionType: bson.M{"$in": nearbyIndexes}}
+
+	if businessType != nil && *businessType != constant.All {
+		query = bson.M{"type": businessType, resolutionType: bson.M{"$in": nearbyIndexes}}
 	}
 
 	// Execute the query
@@ -56,5 +61,4 @@ func FindNearbyBusinesses(lat, lng, radius float64, resolution int) (*[]*model.B
 	}
 
 	return &businessResponses, nil
-
 }

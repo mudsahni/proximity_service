@@ -27,7 +27,6 @@ func LoadConfig() (*Config, error) {
 	if dbPort == "" {
 		dbPort = "27017"
 	}
-
 	return &Config{
 		DBHost:     dbHost,
 		DBPort:     dbPort,

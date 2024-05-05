@@ -40,6 +40,7 @@ func (businessRequest BusinessRequest) ToBusiness() (*Business, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &Business{
 		ID:                  primitive.NewObjectID(),
 		Name:                businessRequest.Name,

@@ -13,6 +13,7 @@ const (
 	Other
 	Religious
 	Hospital
+	All
 )
 
 func (businessType BusinessType) String() string {
@@ -22,7 +23,8 @@ func (businessType BusinessType) String() string {
 		"Other",      // index 2, BusinessType = 2
 		"Religious",  // index 3, BusinessType = 3
 		"Hospital",   // index 4, BusinessType = 4
-	}[businessType] // Use businessType directly as index
+		"All",        // index 5, BusinessType = 5
+	}[businessType] // Use businessType directly as an index
 }
 
 func ParseBusinessType(businessType string) (BusinessType, error) {
@@ -37,6 +39,8 @@ func ParseBusinessType(businessType string) (BusinessType, error) {
 		return Religious, nil
 	case "hospital":
 		return Hospital, nil
+	case "all":
+		return All, nil
 	default:
 		return 0, fmt.Errorf("invalid business type")
 	}

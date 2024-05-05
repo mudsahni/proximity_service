@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"proximity_service_go/cmd/constant"
 	"proximity_service_go/internal/model"
 	"proximity_service_go/internal/service"
 	"proximity_service_go/util"
@@ -32,7 +33,6 @@ func getBusinessHandler(c *gin.Context) {
 		})
 		return
 	}
-
 	c.JSON(http.StatusOK, business)
 }
 
@@ -42,6 +42,7 @@ func getNearbyBusinessesHandler(c *gin.Context) {
 	lng, lngErr := util.ConvertToFloat(c.Query("lng"))
 	radius, radiusErr := util.ConvertToFloat(c.Query("radius"))
 	resolution, resolutionErr := util.ConvertToInt(c.Query("resolution"))
+	businessType := c.DefaultQuery("type", constant.All.String())
 
 	switch {
 	case latErr != nil:
@@ -64,7 +65,16 @@ func getNearbyBusinessesHandler(c *gin.Context) {
 			"error": "Invalid resolution parameter",
 		})
 	}
-	businesses, err := service.FindNearbyBusinesses(lat, lng, radius, resolution)
+	businessTypeValue, businessTypeConversionErr := constant.ParseBusinessType(businessType)
+
+	if businessTypeConversionErr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid business type parameter",
+		})
+
+	}
+
+	businesses, err := service.FindNearbyBusinesses(lat, lng, radius, resolution, &businessTypeValue)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": "Business not found",
